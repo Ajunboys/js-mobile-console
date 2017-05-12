@@ -115,6 +115,7 @@
 			}
 
 			if (!this.commandsPopulated){
+				var _self = self;
 				this.$el.commandsContainer.addEventListener('click', function(event){
 					if (event.target.className === 'jsmc-command'){
 						var command = event.target.command;
@@ -203,7 +204,7 @@
 
 			function logValue(){
 				var val = self.$el.input.value;
-				var res = self.eval(val);
+				var res = self.eval(val).bind(self);
 				self.logValue(res.text, res.error);
 			}
 		},
