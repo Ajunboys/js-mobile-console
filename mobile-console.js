@@ -247,7 +247,7 @@
 				text = e.message;
 				error = true;
 			}
-			text = self.inspectObject(text);
+			text = this.inspectObject(text);
 			return {
 				text: text,
 				error: error
