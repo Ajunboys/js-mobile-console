@@ -213,6 +213,29 @@
 			this.$el.commandsContainer.style.display = this.commandsShown ? 
 				'inline-block' : 'none';
 		},
+		
+		inspectObject: function(object) {
+		  if (object == null) {
+		    return "(null)";
+		  }
+		  if (typeof object === "object") {
+		    var output = '{ \n';
+		    for (var property in object) {
+		      var value;
+		      if (property == null) {
+			value = '(null)';
+		      }
+		      if (property == undefined) {
+			continue;
+		      }
+		      output += '\t' + property + ': ' + JSON.stringify(text[property]) + '; \n';
+		    }
+		    output += ' }';
+			return output;
+		  } else {
+		    return JSON.stringify(object);
+		  }
+		},
 
 		eval: function(command){
 			var text;
@@ -223,14 +246,7 @@
 				text = e.message;
 				error = true;
 			}
-			if (JSON && JSON.stringify){
-				try{
-					text = JSON.stringify(text);
-				} catch(e){
-					text = e.message;
-					error = true;					
-				}
-			}
+			text = self.inspectObject(text);
 			return {
 				text: text,
 				error: error
